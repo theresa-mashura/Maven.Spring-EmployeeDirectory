@@ -36,11 +36,11 @@ public class EmployeeService {
         Employee e = this.employeeRepository.findOne(id);
         e.setDepartmentNumber(employee.getDepartmentNumber());
         e.setEmail(employee.getEmail());
-        e.setEmployeeNumber(employee.getEmployeeNumber());
+        e.setId(employee.getId());
         e.setFirstName(employee.getFirstName());
         e.setLastName(employee.getLastName());
         e.setHireDate(employee.getHireDate());
-        e.setManager(employee.getManager());
+        //e.setManager(employee.getManager());
         e.setTitle(employee.getTitle());
         e.setPhoneNumber(employee.getPhoneNumber());
         return e;

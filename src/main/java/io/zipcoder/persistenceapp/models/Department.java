@@ -3,13 +3,14 @@ package io.zipcoder.persistenceapp.models;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "DEPARTMENT")
 public class Department {
 
     @Id
     @GeneratedValue
-    private long departmentNumber;
+    private Long departmentNumber;
     private String departmentName;
-    private long departmentManagerId;
+    private Long departmentManagerId;
 
     public Department() {
 
@@ -21,11 +22,11 @@ public class Department {
         this.departmentManagerId = departmentManagerId;
     }
 
-    public long getDepartmentNumber() {
+    public Long getDepartmentNumber() {
         return departmentNumber;
     }
 
-    public void setDepartmentNumber(long departmentNumber) {
+    public void setDepartmentNumber(Long departmentNumber) {
         this.departmentNumber = departmentNumber;
     }
 
@@ -37,11 +38,11 @@ public class Department {
         this.departmentName = departmentName;
     }
 
-    public long getDepartmentManagerId() {
+    public Long getDepartmentManagerId() {
         return departmentManagerId;
     }
 
-    public void setDepartmentManagerId(long departmentManagerId) {
+    public void setDepartmentManagerId(Long departmentManagerId) {
         this.departmentManagerId = departmentManagerId;
     }
 }

@@ -1,16 +1,15 @@
 package io.zipcoder.persistenceapp.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "EMPLOYEE")
 public class Employee {
 
     @Id
-    @GeneratedValue
-    private long employeeNumber;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    private Long id;
 
     private String firstName;
     private String lastName;
@@ -18,17 +17,17 @@ public class Employee {
     private String phoneNumber;
     private String email;
     private String hireDate;
-    private long departmentNumber;
+    private Long departmentNumber;
 
-    @ManyToOne
-    private Employee manager;
+    //@ManyToOne
+    //private Employee manager;
 
     public Employee() {
 
     }
 
-    public Employee(long employeeNumber, String firstName, String lastName, String title, String phoneNumber, String email, String hireDate, long departmentNumber, Employee manager) {
-        this.employeeNumber = employeeNumber;
+    public Employee(Long id, String firstName, String lastName, String title, String phoneNumber, String email, String hireDate, Long departmentNumber) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.title = title;
@@ -36,15 +35,15 @@ public class Employee {
         this.email = email;
         this.hireDate = hireDate;
         this.departmentNumber = departmentNumber;
-        this.manager = manager;
+        //this.manager = manager;
     }
 
-    public long getEmployeeNumber() {
-        return employeeNumber;
+    public Long getId() {
+        return id;
     }
 
-    public void setEmployeeNumber(long employeeNumber) {
-        this.employeeNumber = employeeNumber;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -95,19 +94,19 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    public long getDepartmentNumber() {
+    public Long getDepartmentNumber() {
         return departmentNumber;
     }
 
-    public void setDepartmentNumber(long departmentNumber) {
+    public void setDepartmentNumber(Long departmentNumber) {
         this.departmentNumber = departmentNumber;
     }
 
-    public Employee getManager() {
-        return manager;
-    }
-
-    public void setManager(Employee manager) {
-        this.manager = manager;
-    }
+//    public Employee getManager() {
+//        return manager;
+//    }
+//
+//    public void setManager(Employee manager) {
+//        this.manager = manager;
+//    }
 }
