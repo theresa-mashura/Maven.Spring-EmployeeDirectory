@@ -31,7 +31,7 @@ public class DepartmentService {
         Department d = departmentRepository.findOne(id);
         d.setDepartmentManagerId(department.getDepartmentManagerId());
         d.setDepartmentName(department.getDepartmentName());
-        d.setDepartmentNumber(department.getDepartmentNumber());
+        d.setId(department.getId());
         return d;
     }
 

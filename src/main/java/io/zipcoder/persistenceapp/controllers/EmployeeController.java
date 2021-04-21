@@ -5,7 +5,6 @@ import io.zipcoder.persistenceapp.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 public class EmployeeController {
@@ -19,7 +18,7 @@ public class EmployeeController {
 
     // POST - CREATE EMPLOYEE
     @RequestMapping(value = "/API/employee", method = RequestMethod.POST)
-    public Employee createNewEmployee(Employee employee) {
+    public Employee createNewEmployee(@RequestBody Employee employee) {
         return es.create(employee);
     }
 

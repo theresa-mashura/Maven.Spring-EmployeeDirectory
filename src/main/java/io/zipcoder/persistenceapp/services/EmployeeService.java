@@ -40,7 +40,7 @@ public class EmployeeService {
         e.setFirstName(employee.getFirstName());
         e.setLastName(employee.getLastName());
         e.setHireDate(employee.getHireDate());
-        //e.setManager(employee.getManager());
+        e.setManager(employee.getManager());
         e.setTitle(employee.getTitle());
         e.setPhoneNumber(employee.getPhoneNumber());
         return e;
