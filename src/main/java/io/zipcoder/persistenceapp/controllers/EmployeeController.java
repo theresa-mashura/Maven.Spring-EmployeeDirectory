@@ -2,8 +2,12 @@ package io.zipcoder.persistenceapp.controllers;
 
 import io.zipcoder.persistenceapp.models.Employee;
 import io.zipcoder.persistenceapp.services.EmployeeService;
+import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -41,30 +45,43 @@ public class EmployeeController {
     }
 
     // UPDATE - SET EMPLOYEE MANAGER
-//    @RequestMapping(value = "/API/employee/{id}", method = RequestMethod.PATCH)
-//    public Employee setManager(@PathVariable Long id, @RequestBody Employee employeeManager) {
-//
-//        return this.es.update()
-//    }
+    @RequestMapping(value = "/API/employee/{id}/manager/{managerId}", method = RequestMethod.PATCH)
+    public Employee setManager(@PathVariable Long id, @PathVariable Long managerId) {
+        return this.es.updateManager(id, managerId);
+    }
 
     // GET - LIST EMPLOYEES UNDER PARTICULAR MANAGER
+    @RequestMapping(value = "/API/employee/manager/{id}", method = RequestMethod.GET)
+    public List<Employee> findEmployeesUnderManager(@PathVariable Long id) {
+        return this.es.findByManger(id);
+    }
 
     // GET REPORTING HIERARCHY FOR AN EMPLOYEE (MANAGER, MANAGER'S MANAGER, ETC.)
+    @RequestMapping(value = "/API/employee/{id}/manager/all", method = RequestMethod.GET)
+    public List<Employee> getReportingHierarchy(@PathVariable Long id) {
+        return this.es.getReportingHierarchy(id);
+    }
 
     // GET EMPLOYEES WITH NO MANAGER
-
-    // GET ALL EMPLOYEES OF PARTICULAR DEPT
+    @RequestMapping(value = "/API/employee/manager/none", method = RequestMethod.GET)
+    public List<Employee> getEmployeesNoManager() {
+        return this.es.findByManger(null);
+    }
 
     // GET ALL EMPLOYEES WHO REPORT DIRECTLY OR INDIRECTLY TO A PARTICULAR MANAGER
+    public List<Employee> getEmployeesUnderManager(@PathVariable  Long id) {
+
+    }
 
     // REMOVE PARTICULAR EMPLOYEE OR LIST OF EMPLOYEES
-
-    // REMOVE ALL EMPLOYEES FROM A PARTICULAR DEPT
 
     // REMOVE ALL EMPLOYEES UNDER A PARTICULAR MANAGER (INCL INDIRECT REPORTS)
 
     // REMOVE ALL DIRECT REPORTS TO A MANAGER (EMPLOYEES UNDER THEM SHOULD NOW BE MANAGED BY NEW MANAGER IN HIERARCHY)
 
+    // REMOVE ALL EMPLOYEES FROM A PARTICULAR DEPT
+
+    // GET ALL EMPLOYEES OF PARTICULAR DEPT
 
     // MERGE DEPTS (A & B - MANAGER OF B WILL REPORT TO A & EMPLOYEES IN B WILL MOVE TO A)
 

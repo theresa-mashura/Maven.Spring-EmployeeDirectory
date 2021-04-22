@@ -11,8 +11,10 @@ CREATE TABLE EMPLOYEE (
     email VARCHAR2(255),
     hire_date VARCHAR2(255),
     department_number INT,
-    manager_id JAVA_OBJECT,
-    PRIMARY KEY (id)
+    manager JAVA_OBJECT,
+    manager_id INT,
+    PRIMARY KEY (id),
+    CONSTRAINT FK_MANAGER_EMP FOREIGN KEY (manager_id) references EMPLOYEE(id)
 );
 
 DROP TABLE IF EXISTS DEPARTMENT;
