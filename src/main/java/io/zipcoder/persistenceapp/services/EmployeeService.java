@@ -3,10 +3,7 @@ import io.zipcoder.persistenceapp.models.Employee;
 import io.zipcoder.persistenceapp.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -42,6 +39,9 @@ public class EmployeeService {
 
     public List<Boolean> deleteEmployeeUnderManager(Long id) {
         List<Long> toDelete = this.getDirectAndIndirectReports(id);
+        for (Long i : toDelete) {
+            this.show(i).setManagerId(null);
+        }
         return this.delete(toDelete);
     }
 

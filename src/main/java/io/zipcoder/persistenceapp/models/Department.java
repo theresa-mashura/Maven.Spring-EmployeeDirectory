@@ -9,6 +9,7 @@ public class Department {
     @Id
     @GeneratedValue
     private Long id;
+
     private String departmentName;
     private Long departmentManagerId;
 
@@ -16,12 +17,18 @@ public class Department {
 
     }
 
+    public Department(Long id, String departmentName, Long departmentManagerId) {
+        this.id = id;
+        this.departmentName = departmentName;
+        this.departmentManagerId = departmentManagerId;
+    }
+
     public Long getId() {
         return id;
     }
 
-    public void setId(Long departmentNumber) {
-        this.id = departmentNumber;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDepartmentName() {

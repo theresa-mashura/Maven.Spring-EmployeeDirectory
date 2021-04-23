@@ -50,12 +50,6 @@ public class EmployeeController {
         return this.es.updateManager(id, managerId);
     }
 
-    // GET - LIST EMPLOYEES UNDER PARTICULAR MANAGER
-    @RequestMapping(value = "/API/employee/manager/{id}", method = RequestMethod.GET)
-    public List<Employee> findEmployeesUnderManager(@PathVariable Long id) {
-        return this.es.findByManger(id);
-    }
-
     // GET REPORTING HIERARCHY FOR AN EMPLOYEE (MANAGER, MANAGER'S MANAGER, ETC.)
     @RequestMapping(value = "/API/employee/{id}/manager/all", method = RequestMethod.GET)
     public List<Employee> getReportingHierarchy(@PathVariable Long id) {
@@ -86,12 +80,31 @@ public class EmployeeController {
         return this.es.deleteEmployeeUnderManager(managerId);
     }
 
+    // GET - LIST EMPLOYEES UNDER PARTICULAR MANAGER
+    @RequestMapping(value = "/API/employee/manager/{id}", method = RequestMethod.GET)
+    public List<Employee> findEmployeesUnderManager(@PathVariable Long id) {
+        return this.es.findByManger(id);
+    }
+
     // REMOVE ALL DIRECT REPORTS TO A MANAGER (EMPLOYEES UNDER THEM SHOULD NOW BE MANAGED BY NEW MANAGER IN HIERARCHY)
-
-    // REMOVE ALL EMPLOYEES FROM A PARTICULAR DEPT
-
-    // GET ALL EMPLOYEES OF PARTICULAR DEPT
-
-    // MERGE DEPTS (A & B - MANAGER OF B WILL REPORT TO A & EMPLOYEES IN B WILL MOVE TO A)
+    @RequestMapping(value = "/API/employee/direct-reports/manager/{id}", method = RequestMethod.DELETE)
+    public List<Employee> removeDirectReportsToManager(@PathVariable("id") Long managerId) {
+        Long newManager = this.es.show(managerId).getManagerId();
+        if (newManager != null) {
+            List<Employee> directReports = this.es.findByManger(managerId);
+            List<Long> directReportIds = new ArrayList<>();
+            List<Employee> indirectReports;
+            for (Employee e : directReports) {
+                indirectReports = this.es.findByManger(e.getId());
+                for (Employee i : indirectReports) {
+                    this.es.updateManager(i.getId(), newManager);
+                }
+                directReportIds.add(e.getId());
+            }
+            this.es.delete(directReportIds);
+            return directReports;
+        }
+        return null;
+    }
 
 }

@@ -16,20 +16,27 @@ public class DepartmentService {
     }
 
     public Iterable<Department> findAll() {
-        return departmentRepository.findAll();
+        return this.departmentRepository.findAll();
     }
 
     public Department show(long id) {
-        return departmentRepository.findOne(id);
+        return this.departmentRepository.findOne(id);
     }
 
     public Department create(Department department) {
-        return departmentRepository.save(department);
+        return this.departmentRepository.save(department);
     }
 
     public Department update(Long deptId, Long managerId) {
-        Department d = departmentRepository.findOne(deptId);
+        Department d = this.departmentRepository.findOne(deptId);
         d.setDepartmentManagerId(managerId);
+        this.departmentRepository.save(d);
+        return d;
+    }
+
+    public Department update(Long deptId, String name) {
+        Department d = departmentRepository.findOne(deptId);
+        d.setDepartmentName(name);
         this.departmentRepository.save(d);
         return d;
     }
