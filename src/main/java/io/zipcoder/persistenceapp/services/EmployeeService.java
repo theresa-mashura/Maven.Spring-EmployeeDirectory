@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -30,9 +31,18 @@ public class EmployeeService {
         return this.employeeRepository.findOne(id);
     }
 
-    public Boolean delete(Long id) {
-        this.employeeRepository.delete(id);
-        return true;
+    public List<Boolean> delete(List<Long> ids) {
+        List<Boolean> deleted = new ArrayList<>();
+        for (Long id : ids) {
+            this.employeeRepository.delete(id);
+            deleted.add(true);
+        }
+        return deleted;
+    }
+
+    public List<Boolean> deleteEmployeeUnderManager(Long id) {
+        List<Long> toDelete = this.getDirectAndIndirectReports(id);
+        return this.delete(toDelete);
     }
 
     public Employee update(Long id, Employee employee) {
@@ -77,14 +87,39 @@ public class EmployeeService {
         return reportingTo;
     }
 
-    public List<Employee> getDirectAndIndirectReports(Long mgrId) {
+    public List<Long> getDirectAndIndirectReports(Long mgrId) {
         List<Long> empIds = new ArrayList<>();
         List<Employee> directReports = this.findByManger(mgrId);
 
+        int end = directReports.size();
+        int begin = 0;
+        boolean done = true;
+        // Add the ids of the direct reports
         for (Employee emp : directReports) {
             empIds.add(emp.getId());
         }
 
+        int countNull = 0;
+        int levelSize = empIds.size() - begin;
+        // Iterate through next level of employees, add to list, keep going...
+        // Stop when null lists = the size of the level (no more employees down the hierarchy)
+        while (levelSize != countNull) {
+            countNull = 0;
+            levelSize = empIds.size() - begin;
+            for (int i = begin; i < end; i++) {
+                begin++;
+                List<Employee> list = findByManger(empIds.get(i));
+                if (list.size() > 0) {
+                    for (Employee emp : list) {
+                        empIds.add(emp.getId());
+                        end++;
+                    }
+                } else {
+                    countNull++;
+                }
+            }
+        }
+        return empIds;
     }
 
 

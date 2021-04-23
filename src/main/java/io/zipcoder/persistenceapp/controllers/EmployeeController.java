@@ -69,13 +69,22 @@ public class EmployeeController {
     }
 
     // GET ALL EMPLOYEES WHO REPORT DIRECTLY OR INDIRECTLY TO A PARTICULAR MANAGER
-    public List<Employee> getEmployeesUnderManager(@PathVariable  Long id) {
-
+    @RequestMapping(value = "/API/employee/reports/manager/{id}", method = RequestMethod.GET)
+    public List<Long> getEmployeesUnderManager(@PathVariable  Long id) {
+        return this.es.getDirectAndIndirectReports(id);
     }
 
     // REMOVE PARTICULAR EMPLOYEE OR LIST OF EMPLOYEES
+    @RequestMapping(value = "/API/employee", method = RequestMethod.DELETE)
+    public List<Boolean> removeEmployees(@RequestBody List<Long> employeeIds) {
+        return this.es.delete(employeeIds);
+    }
 
     // REMOVE ALL EMPLOYEES UNDER A PARTICULAR MANAGER (INCL INDIRECT REPORTS)
+    @RequestMapping(value = "/API/employee/manager/{id}", method = RequestMethod.DELETE)
+    public List<Boolean> removeEmployeesUnderManager(@PathVariable("id") Long managerId) {
+        return this.es.deleteEmployeeUnderManager(managerId);
+    }
 
     // REMOVE ALL DIRECT REPORTS TO A MANAGER (EMPLOYEES UNDER THEM SHOULD NOW BE MANAGED BY NEW MANAGER IN HIERARCHY)
 

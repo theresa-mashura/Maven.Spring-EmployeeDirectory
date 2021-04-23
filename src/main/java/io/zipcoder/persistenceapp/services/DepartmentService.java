@@ -27,11 +27,10 @@ public class DepartmentService {
         return departmentRepository.save(department);
     }
 
-    public Department update(Long id, Department department) {
-        Department d = departmentRepository.findOne(id);
-        d.setDepartmentManagerId(department.getDepartmentManagerId());
-        d.setDepartmentName(department.getDepartmentName());
-        d.setId(department.getId());
+    public Department update(Long deptId, Long managerId) {
+        Department d = departmentRepository.findOne(deptId);
+        d.setDepartmentManagerId(managerId);
+        this.departmentRepository.save(d);
         return d;
     }
 
