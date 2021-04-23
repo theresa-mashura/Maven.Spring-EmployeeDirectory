@@ -3,7 +3,6 @@ package io.zipcoder.persistenceapp.controllers;
 import io.zipcoder.persistenceapp.models.Department;
 import io.zipcoder.persistenceapp.services.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,6 +40,7 @@ public class DepartmentController {
     }
 
     // REMOVE ALL EMPLOYEES FROM A PARTICULAR DEPT
+
 
     // GET ALL EMPLOYEES OF PARTICULAR DEPT
 
