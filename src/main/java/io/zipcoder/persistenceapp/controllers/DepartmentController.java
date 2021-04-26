@@ -38,13 +38,4 @@ public class DepartmentController {
     public Department updateDepartmentName(@PathVariable("deptId") Long deptId, @PathVariable("name") String name) {
         return this.ds.update(deptId, name);
     }
-
-    // REMOVE ALL EMPLOYEES FROM A PARTICULAR DEPT
-
-
-    // GET ALL EMPLOYEES OF PARTICULAR DEPT
-
-    // MERGE DEPTS (A & B - MANAGER OF B WILL REPORT TO A & EMPLOYEES IN B WILL MOVE TO A)
-
-
 }

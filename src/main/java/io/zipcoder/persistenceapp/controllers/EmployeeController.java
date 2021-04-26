@@ -1,14 +1,10 @@
 package io.zipcoder.persistenceapp.controllers;
-
 import io.zipcoder.persistenceapp.models.Employee;
 import io.zipcoder.persistenceapp.services.EmployeeService;
-import org.apache.catalina.connector.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 @RestController
 public class EmployeeController {
@@ -107,4 +103,21 @@ public class EmployeeController {
         return null;
     }
 
+    // FIND ALL EMPLOYEES FROM A PARTICULAR DEPARTMENT
+    @RequestMapping(value = "/API/employee/all/department/{id}", method = RequestMethod.GET)
+    public Iterable<Employee> findAllInDepartment(@PathVariable Long id) {
+            return this.es.findAllFromDepartment(id);
+    }
+
+    // DELETE ALL EMPLOYEES FROM A PARTICULAR DEPARTMENT
+    @RequestMapping(value = "/API/employee/all/department/{id}", method = RequestMethod.DELETE)
+    public void deleteAllInDepartment(@PathVariable Long id) {
+        this.es.deleteAllFromDept(id);
+    }
+
+    // MERGE DEPTS (A & B - MANAGER OF B WILL REPORT TO A & EMPLOYEES IN B WILL MOVE TO A)
+    @RequestMapping(value = "/API/departments/merge/to/{mergeTo}/from/{mergeFrom}", method = RequestMethod.PUT)
+    public Iterable<Employee> mergeDeptBIntoDeptA(@PathVariable Long mergeTo, @PathVariable Long mergeFrom) {
+        return this.es.mergeDepartmentBIntoA(mergeTo, mergeFrom);
+    }
 }

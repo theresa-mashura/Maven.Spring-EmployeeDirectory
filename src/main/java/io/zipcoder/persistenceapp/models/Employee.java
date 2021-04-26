@@ -1,5 +1,4 @@
 package io.zipcoder.persistenceapp.models;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -17,11 +16,14 @@ public class Employee implements Serializable {
     private String phoneNumber;
     private String email;
     private String hireDate;
-    private Long departmentNumber;
+
+    private Long departmentId;
+//    @ManyToOne  // There are MANY employees in ONE department
+//    @JoinColumn(name = "departmentId", referencedColumnName = "id", insertable = false, updatable = false)
+//    private Department department;
 
     private Long managerId;
     @ManyToOne  // There are MANY employees for ONE manager
-    // Put this here to prevent duplicate mapping exception of managerId
     @JoinColumn(name = "managerId", referencedColumnName = "id", insertable = false, updatable = false)
     private Employee manager;
 
@@ -29,16 +31,16 @@ public class Employee implements Serializable {
 
     }
 
-    public Long getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(Long managerId) {
-        this.managerId = managerId;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 
     public void setId(Long id) {
@@ -93,12 +95,12 @@ public class Employee implements Serializable {
         this.hireDate = hireDate;
     }
 
-    public Long getDepartmentNumber() {
-        return departmentNumber;
+    public Long getManagerId() {
+        return managerId;
     }
 
-    public void setDepartmentNumber(Long departmentNumber) {
-        this.departmentNumber = departmentNumber;
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
     }
 
     public Employee getManager() {
@@ -107,5 +109,16 @@ public class Employee implements Serializable {
 
     public void setManager(Employee manager) {
         this.manager = manager;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", departmentId=" + departmentId +
+                ", managerId=" + managerId +
+                '}';
     }
 }

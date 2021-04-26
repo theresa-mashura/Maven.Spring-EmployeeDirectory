@@ -1,6 +1,7 @@
 package io.zipcoder.persistenceapp.models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "DEPARTMENT")
@@ -13,14 +14,11 @@ public class Department {
     private String departmentName;
     private Long departmentManagerId;
 
+//    @OneToMany (mappedBy = "department")
+//    private List<Employee> employees;
+
     public Department() {
 
-    }
-
-    public Department(Long id, String departmentName, Long departmentManagerId) {
-        this.id = id;
-        this.departmentName = departmentName;
-        this.departmentManagerId = departmentManagerId;
     }
 
     public Long getId() {

@@ -47,7 +47,7 @@ public class EmployeeService {
 
     public Employee update(Long id, Employee employee) {
         Employee e = this.employeeRepository.findOne(id);
-        e.setDepartmentNumber(employee.getDepartmentNumber());
+        //e.setDepartmentNumber(employee.getDepartmentNumber());
         e.setEmail(employee.getEmail());
         e.setId(employee.getId());
         e.setFirstName(employee.getFirstName());
@@ -122,5 +122,33 @@ public class EmployeeService {
         return empIds;
     }
 
+    public Iterable<Employee> findAllFromDepartment(Long deptId) {
+        return this.employeeRepository.findByDepartmentId(deptId);
+    }
+
+    public void deleteAllFromDept(Long deptId) {
+        Iterable<Employee> employees = this.findAllFromDepartment(deptId);
+        for(Employee e : employees) {
+            e.setManagerId(null);
+        }
+        this.employeeRepository.save(employees);
+        this.employeeRepository.deleteAllByDepartmentId(deptId);
+    }
+
+    public Iterable<Employee> changeAllFromDeptBToDeptA(Long removeFromDeptId, Long newDeptId) {
+        List<Employee> employeeList = this.employeeRepository.findByDepartmentId(removeFromDeptId);
+        for (Employee e : employeeList) {
+            e.setDepartmentId(newDeptId);
+        }
+        return this.employeeRepository.save(employeeList);
+    }
+
+    public Iterable<Employee> mergeDepartmentBIntoA(Long deptIdA, Long deptIdB) {
+        Employee managerA = this.employeeRepository.findByDepartmentIdAndManagerIdNull(deptIdA);
+        Employee managerB = this.employeeRepository.findByDepartmentIdAndManagerIdNull(deptIdB);
+        managerB.setManagerId(managerA.getId());
+        this.employeeRepository.save(managerB);
+        return this.changeAllFromDeptBToDeptA(deptIdB, deptIdA);
+    }
 
 }
